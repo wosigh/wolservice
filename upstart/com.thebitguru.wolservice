@@ -1,0 +1,32 @@
+description "Wake-on-LAN Service"
+
+start on started java-serviceboot
+
+script
+   logger "com.thebitguru.wolservice upstart: script called"
+
+   sleep 10
+   logger "com.thebitguru.wolservice upstart: delay done"
+
+   returnTrue=0
+   tries=0
+   while [ $returnTrue -eq 0 -a $tries -le 20 ]
+   do
+      returnVal=$(luna-send -n 1 luna://com.thebitguru.wolservice/version '{}' 2>&1)
+
+      logger "com.thebitguru.wolservice upstart: returnVal is $returnVal"
+
+      tries=`expr $tries + 1`
+			if [[ "$returnVal" == *success* ]]
+      then
+         returnTrue=1
+      else
+         sleep 10
+      fi
+   done
+
+   logger "com.thebitguru.wolservice upstart: $returnTrue"
+   logger "com.thebitguru.wolservice upstart: $tries"
+
+   logger "com.thebitguru.wolservice upstart: done"
+end script

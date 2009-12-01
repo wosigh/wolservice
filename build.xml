@@ -1,0 +1,16 @@
+<project name="WOLService" default="build" basedir=".">
+
+<target name="clean">
+  <delete dir="com"/>
+  <delete file="com.thebitguru.wolservice.jar"/>
+</target>
+
+<target name="build">
+  <javac classpath="serviceframework.jar:lunaservice.jar:json.jar:Utils.jar" srcdir="." destdir="."/>
+</target>
+
+<target name="jar" depends="build">
+  <jar destfile="com.thebitguru.wolservice.jar" basedir="." includes="**/*.class"/>
+</target>
+
+</project>

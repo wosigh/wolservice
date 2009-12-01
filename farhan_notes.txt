@@ -1,0 +1,28 @@
+Baseclass MAC: 00:1F:D0:22:CB:29
+Mystic MAC: 00:19:D2:85:05:62 (Wireless) / 00:16:D3:3D:5E:41 (Wired)
+
+tail -f messages | cut -b84- -
+
+top java-serviceboot; start java-serviceboot
+
+luna-send -n 1 palm://com.palm.applicationManager/rescan {}
+
+luna-send -n 1 luna://com.palm.connectionmanager/getStatus '{}'
+luna-send -n 1 luna://com.thebitguru.wolservice/getBroadcastIP '{"ipAddress": "192.168.6.13" }'
+
+luna-send -n 1 luna://com.thebitguru.wolservice/status '{}'
+luna-send -n 1 luna://com.thebitguru.wolservice/version '{}'
+
+luna-send -n 1 luna://com.thebitguru.wolservice/validateMACFormat '{"macAddress": "00:16:D3:3D:5E:41"}'
+
+========== Mystic
+luna-send -n 1 luna://com.thebitguru.wolservice/validateMACFormat '{"macAddress": "00-16-D3-3D-5E-41"}'
+luna-send -n 1 luna://com.thebitguru.wolservice/sendWOL '{"macAddress": "00:16:D3:3D:5E:41", "broadcastIP": "255.255.255.255" }'
+luna-send -n 1 luna://com.thebitguru.wolservice/sendWOL '{"macAddress": "00:16:D3:3D:5E:41", "broadcastIP": "192.168.6.13" }'
+
+========== Baseclass
+luna-send -n 1 luna://com.thebitguru.wolservice/sendWOL '{"macAddress": "00:1F:D0:22:CB:29", "broadcastIP": "192.168.6.13" }'
+luna-send -n 1 luna://com.thebitguru.wolservice/sendWOL '{"macAddress": "00:1F:D0:22:CB:29", "broadcastIP": "192.168.6.13" }'
+luna-send -n 1 luna://com.thebitguru.wolservice/sendWOL '{"macAddress": "00:1F:D0:22:CB:29", "broadcastIP": "192.168.6.255" }'
+
+luna-send -n 1 luna://com.thebitguru.wolservice/validateMACFormat '{"macAddress": "00:1F:D0:22:CB:29"}'

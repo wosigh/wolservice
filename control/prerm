@@ -1,0 +1,19 @@
+#!/bin/sh
+
+# Stop the service
+/sbin/stop com.thebitguru.wolservice
+
+# Remove the java dbus service
+rm -f /usr/lib/luna/java/com.thebitguru.wolservice.jar
+rm -f /usr/share/dbus-1/system-services/com.thebitguru.wolservice.service
+
+# Remove the upstart script
+rm -f /etc/event.d/com.thebitguru.wolservice
+
+# Restart the service handler
+if [ -z "$IPKG_OFFLINE_ROOT" ]; then # Defined by recent installers that also support flags.
+    /sbin/stop java-serviceboot
+    /sbin/start java-serviceboot
+fi
+
+exit 0

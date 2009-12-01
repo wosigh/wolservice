@@ -1,0 +1,4 @@
+[D-BUS Service]
+Name=com.thebitguru.wolservice
+Exec=/usr/bin/luna-helper 'luna://com.palm.vm/launch' '{"serviceName":"com.thebitguru.wolservice","className":"com.thebitguru.wolservice.WOLService"}'
+
