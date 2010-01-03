@@ -2,18 +2,12 @@
 
 # Install the java dbus service
 rm -f /usr/lib/luna/java/com.thebitguru.wolservice.jar
-ln -s /var/usr/lib/luna/java/com.thebitguru.wolservice.jar /usr/lib/luna/java/com.thebitguru.wolservice.jar
+cp $IPKG_OFFLINE_ROOT/usr/lib/luna/java/com.thebitguru.wolservice.jar /usr/lib/luna/java/com.thebitguru.wolservice.jar
 rm -f /usr/share/dbus-1/system-services/com.thebitguru.wolservice.service
-ln -s /var/usr/share/dbus-1/system-services/com.thebitguru.wolservice.service /usr/share/dbus-1/system-services/com.thebitguru.wolservice.service
+cp $IPKG_OFFLINE_ROOT/usr/share/dbus-1/system-services/com.thebitguru.wolservice.service /usr/share/dbus-1/system-services/com.thebitguru.wolservice.service
 
 # Install the upstart script
-rm -f /etc/event.d/com.thebitguru.wolservice
-cp /var/etc/event.d/com.thebitguru.wolservice /etc/event.d/com.thebitguru.wolservice
-
-# Restart the service handler (this also starts this service)
-if [ -z "$IPKG_OFFLINE_ROOT" ]; then # Defined by recent installers that also support flags.
-    /sbin/stop java-serviceboot
-    /sbin/start java-serviceboot
-fi
+rm -f /etc/event.d/org.webosinternals.accelservice
+cp $IPKG_OFFLINE_ROOT/etc/event.d/org.webosinternals.accelservice /etc/event.d/org.webosinternals.accelservice
 
 exit 0
