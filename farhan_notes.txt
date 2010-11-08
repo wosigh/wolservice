@@ -3,7 +3,7 @@ Mystic MAC: 00:19:D2:85:05:62 (Wireless) / 00:16:D3:3D:5E:41 (Wired)
 
 tail -f messages | cut -b84- -
 
-top java-serviceboot; start java-serviceboot
+stop java-serviceboot; start java-serviceboot
 
 luna-send -n 1 palm://com.palm.applicationManager/rescan {}
 

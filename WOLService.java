@@ -4,7 +4,7 @@
  * http://www.jibble.org/wake-on-lan/
  *
  * @author Farhan Ahmad
- * @version 0.5.0
+ * @version 0.6.0
  */
 package com.thebitguru.wolservice;
 
@@ -30,7 +30,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class WOLService extends LunaServiceThread {
-  private String version = "0.5.0";
+  private String version = "0.6.0";
 
 	/**
 	 * Returns the version and the instance that this response was generated at. During development
@@ -68,7 +68,8 @@ public class WOLService extends LunaServiceThread {
 			reply.put("error", "macAddress is required.");
 		} else {
 			try {
-				WakeOnLan.sendWOL(msg.getString("broadcastIP"), msg.getString("macAddress"));
+				WakeOnLan.sendWOL(msg.getString("broadcastIP"), msg.getString("macAddress"),
+						msg.getInt("port"));
 				success = true;
 			} catch (Exception e) {
 				reply.put("error", e.getMessage());
@@ -150,13 +151,12 @@ public class WOLService extends LunaServiceThread {
  * This class sends the actual WOL packet.
  */
 class WakeOnLan {
-	public static final int PORT = 9;    
-
 	/**
 	 * @param broadcastIP IP address of the network interface to broadcast the magic packet on.
 	 * @param macAddress MAC address of the computer that will be getting the magic packet.
+	 * @param port Port to send the magic packet on.
 	 */
-	public static void sendWOL(String broadcastIP, String macAddress)
+	public static void sendWOL(String broadcastIP, String macAddress, int port)
 		throws UnknownHostException, SocketException, IOException {
 		byte[] macBytes = getMacBytes(macAddress);
 		
@@ -170,7 +170,7 @@ class WakeOnLan {
 		}
 
 		InetAddress address = InetAddress.getByName(broadcastIP);
-		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, PORT);
+		DatagramPacket packet = new DatagramPacket(bytes, bytes.length, address, port);
 
 		DatagramSocket socket = new DatagramSocket();
 		socket.send(packet);
